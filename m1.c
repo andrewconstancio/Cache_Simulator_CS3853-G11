@@ -6,9 +6,9 @@
 
 int main() {
 
-    int cSize = 128;
+    int cSize = 512;
     int bSize = 16;
-    int asso = 2;
+    int asso = 8;
     char rp[3] = "r";
     
     // BLOCK TOTAL
