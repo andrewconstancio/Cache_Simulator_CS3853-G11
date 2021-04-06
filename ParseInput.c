@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
+
 #include "ParseInput.h"
 
 //Struct to hold arguments
@@ -20,7 +22,7 @@ ParsedArgs *parseInput(int argc, char **argv)
     else{
         //create ParsedArgs struct
 //        ParsedArgs myIns;
-        for( i = 0; i <= 10; i+=2 )
+        for( i = 0; i < 10; i+=2 )
         {   
             if(strcmp(argv[i], "-f") == 0){ 
                 //trace file name
@@ -43,7 +45,7 @@ ParsedArgs *parseInput(int argc, char **argv)
                 //get cache size
                 myIns->cacheSize = -1;
                 myIns->cacheSize = atoi(argv[i+1]);
-                if(myIns->cacheSize > 8 || myIns->cacheSize < 1){
+                if(myIns->cacheSize > 8000 || myIns->cacheSize < 1){
                     break;
                 }
                 validCounter = validCounter | 2; 
@@ -88,6 +90,7 @@ ParsedArgs *parseInput(int argc, char **argv)
         }   
         //check if valid bit true
         if(validCounter != 31){
+            printf("%d\n", validCounter);
             return NULL;
         }
         return myIns;
