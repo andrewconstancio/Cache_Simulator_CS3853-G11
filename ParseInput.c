@@ -4,14 +4,8 @@
 #include "ParseInput.h"
 
 //Struct to hold arguments
-struct _ParsedArgs{
-    char *traceFileName;
-    int cacheSize;
-    int blockSize;
-    int associativity;
-    // '0' for random, '1' for Round Robin, '2' for LRU 
-    int replacementVal;
-};
+//struct _ParsedArgs;
+//above moved to header file
 
 //returns null on error
 ParsedArgs *parseInput(int argc, char **argv)

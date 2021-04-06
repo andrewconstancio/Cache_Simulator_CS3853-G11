@@ -3,17 +3,19 @@
 #include <stdlib.h>
 #include <math.h> 
 
+#include "ParseInput.h"
 
-int main( int argc, char *argv[] ) {
 
-    int cSize = atoi(argv[4]);
-    int bSize = atoi(argv[6]);
-    int asso = atoi(argv[8]);
+void m1(ParsedArgs *myIns) {
+
+    int cSize = myIns->cacheSize;
+    int bSize = myIns->blockSize;
+    int asso = myIns->associativity;
     char rp[3] = "";
     printf("\n");
 
 
-    printf("Trace File: %s\n", argv[2]);
+    printf("Trace File: %s\n", myIns->traceFileName);
     printf("\n");
     printf("***** Cache Input Parameters ***** \n");
     printf("Cache Size:                    %dKB\n", cSize);
@@ -25,11 +27,11 @@ int main( int argc, char *argv[] ) {
 
     FILE *file;
     char line[256];
-    file = fopen(argv[2], "r");
+    file = fopen(myIns->traceFileName, "r");
 
     if (file == NULL){
-        printf("file doesnt exist?!\n");
-        return 1;
+        printf("file does not exist?!\n");
+        exit(1);
     }
 
     // BLOCK TOTAL
@@ -61,7 +63,7 @@ int main( int argc, char *argv[] ) {
     int act_size = cSize + overhead_convert;
 
     //COST
-    double cost = act_size * 0.07;
+    double cost = act_size * 0.09; // 9 cents per KB as per instruction file
 
     printf("Total # Blocks:               %d\n", block_total);
     printf("Tag Size:                     %d bits\n", tag);
@@ -114,6 +116,5 @@ int main( int argc, char *argv[] ) {
     }
 
     fclose(file);
-
-    return 0;
+	
 }
