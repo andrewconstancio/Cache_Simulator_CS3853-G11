@@ -11,7 +11,13 @@ void m1(ParsedArgs *myIns) {
     int cSize = myIns->cacheSize;
     int bSize = myIns->blockSize;
     int asso = myIns->associativity;
-    char rp[3] = "";
+    char *rp;
+        if(myIns->replacementVal == 0){
+            rp = "RND";
+        } 
+        if(myIns->replacementVal == 1){
+            rp = "RR";
+        }
     printf("\n");
 
 
@@ -21,7 +27,7 @@ void m1(ParsedArgs *myIns) {
     printf("Cache Size:                    %dKB\n", cSize);
     printf("Block Size:                    %d bytes\n", bSize);
     printf("Associativity:                 %d \n", asso);
-    printf("Replacement Policy:            \n");
+    printf("Replacement Policy:            %s \n", rp);
 
     printf("\n");
 
