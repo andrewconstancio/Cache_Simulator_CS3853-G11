@@ -4,20 +4,41 @@
 #include <math.h> 
 
 
-int main() {
+int main( int argc, char *argv[] ) {
 
-    int cSize = 512;
-    int bSize = 16;
-    int asso = 8;
-    char rp[3] = "r";
-    
+    int cSize = atoi(argv[4]);
+    int bSize = atoi(argv[6]);
+    int asso = atoi(argv[8]);
+    char rp[3] = "";
+    printf("\n");
+
+
+    printf("Trace File: %s\n", argv[2]);
+    printf("\n");
+    printf("***** Cache Input Parameters ***** \n");
+    printf("Cache Size:                    %dKB\n", cSize);
+    printf("Block Size:                    %d bytes\n", bSize);
+    printf("Associativity:                 %d \n", asso);
+    printf("Replacement Policy:            \n");
+
+    printf("\n");
+
+    FILE *file;
+    char line[256];
+    file = fopen(argv[2], "r");
+
+    if (file == NULL){
+        printf("file doesnt exist?!\n");
+        return 1;
+    }
+
     // BLOCK TOTAL
     int bit_value = cSize * 1024;
     int bit_block_value  = bSize * 8;
     int block_total = bit_value / bit_block_value;
     block_total = block_total * 8;
 
-    printf("BLOCKS TOTAL: %d\n", block_total);
+    printf("Total # Blocks:               %d\n", block_total);
 
     //INDEX 
     double bit_block = log( bSize) / log( 2 );
@@ -26,56 +47,67 @@ int main() {
 
     int index  = ( int) bit_size - ( (int) bit_block + (int) bit_asso);
 
-    printf("INDEX: %d\n", index);
+    printf("Index Size:                   %d bits\n", index);
 
     //TAG SIZE
     int tag = 32 -  (int) bit_block - index;
-    printf("TAG: %d\n", tag);
+    printf("Tag Size:                     %d bits\n", tag);
 
     //NUMBER OF ROWS
     int rows = block_total / asso;
-    printf("ROWS: %d\n", rows);
+    printf("Total # Rows:                 %d\n", rows);
 
     //OVERHEAD
     int overhead = ((tag + 1) * block_total) / 8;
-    printf("OVERHEAD: %d\n", overhead);
+    printf("Overhead Size:                %d bytes\n", overhead);
 
     //IMPLEMATION SIZE
     int overhead_convert = overhead / 1024;
     int act_size = cSize + overhead_convert;
-    printf("IMPLEMATION SIZE: %dKB\n", act_size);
+    printf("Implementation Memory Size:   %d\n", act_size);
 
     //COST
-    double cost = act_size * 0.09;
-    printf("COST: $%.2lf\n", cost);
+    double cost = act_size * 0.07;
+    printf("Cost:                         %.2lf\n", cost);
 
-
-    FILE *file;
-    char line[256];
-    file = fopen("TestTrace.trc", "r+");
+    printf("\n");
 
     int count = 0;
     int line_count = 1;
+    char real_size[3];
 
     while (fgets(line, sizeof(line), file)) {
         signed int address;
         signed int address_two;
-        char reg[20];
-        int size;
+        signed int address_three;
+        char reg[20], temp[20];
+        char size[5];
 
-
-        // if(line_count == 1) {
-            sscanf(line, "%s %d %x", reg, &size, &address);
-        // } else if(line_count == 2) {
-        //     // sscanf(line, "%s %x %s %s %x %s", reg, &size, &address, &address_two);
-        // }
-        if(strcmp(reg, "EIP") == 0) {
-            printf("0x%x: %d\n", address, size);   
+        
+        if(line_count == 1) {
+            sscanf(line, "%s %s %x", reg, size, &address);
+            real_size[0] = size[1];
+            real_size[1] = size[2];
+            printf("0x%x: 00%s\n", address, real_size); 
             count++;
-            line_count  = 0;
-            if(count == 20) {
-                break;
+         } else if(line_count == 2) {
+            sscanf(line, "%s %x %s %s %x %s", temp, &address_two, temp, temp, &address_three, temp);
+            if(address_two > 0) {
+                printf("0x%x: 00%s\n", address, real_size);
+                count++;
             }
+            if(address_three > 0) {
+                printf("0x%x: 00%s\n", address, real_size);
+                count++;
+            }
+        } else {
+            line_count = 0;
+        }
+
+        line_count++;
+
+        if(count == 20) {
+            break;
         }
     }
 
