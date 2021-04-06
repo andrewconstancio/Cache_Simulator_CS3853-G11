@@ -7,7 +7,7 @@
 int main(int argc, char **argv){
 
 	//print intro line
-	printf("Cache Simulator - CS 3853 - Group #11 Version: M1\n");
+	printf("Cache Simulator CS 3853 Spring 2021 - Group #11\n"); // section 2.5 assignment sheet
 
 	//parse command line inputs
 	ParsedArgs *myIns = parseInput(argc - 1, argv+1);
