@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "ParseInput.h"
+//#include "ParseInput.h"
 
 //Struct to hold arguments
 //struct _ParsedArgs;
@@ -90,7 +90,7 @@ ParsedArgs *parseInput(int argc, char **argv)
         }   
         //check if valid bit true
         if(validCounter != 31){
-            printf("%d\n", validCounter);
+//          printf("%d\n", validCounter);
             return NULL;
         }
         return myIns;
