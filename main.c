@@ -19,7 +19,7 @@ int main(int argc, char **argv){
 	//TODO Cache simulation
 
 	//free parsed args
-	//free(myIns->traceFileName);
+	free(myIns->traceFileName);
 	free(myIns);
 	myIns = NULL;
 
