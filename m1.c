@@ -93,11 +93,11 @@ int main( int argc, char *argv[] ) {
          } else if(line_count == 2) {
             sscanf(line, "%s %x %s %s %x %s", temp, &address_two, temp, temp, &address_three, temp);
             if(address_two > 0) {
-                printf("0x%x: 00%s\n", address, real_size);
+                printf("0x%x: 00%s\n", address_two, real_size);
                 count++;
             }
             if(address_three > 0) {
-                printf("0x%x: 00%s\n", address, real_size);
+                printf("0x%x: 00%s\n", address_three, real_size);
                 count++;
             }
         } else {
