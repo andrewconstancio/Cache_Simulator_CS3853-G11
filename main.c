@@ -6,6 +6,9 @@
 
 int main(int argc, char **argv){
 
+	//print intro line
+	printf("Cache Simulator - CS 3853 - Group #11 Version: M1\n");
+
 	//parse command line inputs
 	ParsedArgs *myIns = parseInput(argc - 1, argv+1);
 	if (myIns == NULL){ 

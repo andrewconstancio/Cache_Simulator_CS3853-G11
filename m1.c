@@ -13,10 +13,13 @@ void m1(ParsedArgs *myIns) {
     int asso = myIns->associativity;
     char *rp;
         if(myIns->replacementVal == 0){
-            rp = "RND";
+            rp = "Random";
         } 
         if(myIns->replacementVal == 1){
-            rp = "RR";
+            rp = "Round-Robin";
+        }
+		if(myIns->replacementVal == 2){
+            rp = "Last Recently Used";
         }
     printf("\n");
 
@@ -67,17 +70,20 @@ void m1(ParsedArgs *myIns) {
     //IMPLEMATION SIZE
     int overhead_convert = overhead / 1024;
     int act_size = cSize + overhead_convert;
+	int act_size_bytes = act_size * 1024;
 
     //COST
     double cost = act_size * 0.09; // 9 cents per KB as per instruction file
+	
+	printf("***** Cache Calculated Values *****\n\n");
 
     printf("Total # Blocks:               %d\n", block_total);
     printf("Tag Size:                     %d bits\n", tag);
     printf("Index Size:                   %d bits\n", index);
     printf("Total # Rows:                 %d\n", rows);
     printf("Overhead Size:                %d bytes\n", overhead);
-    printf("Implementation Memory Size:   %d\n", act_size);
-    printf("Cost:                         %.2lf\n", cost);
+    printf("Implementation Memory Size:   %d.00 KB	(%d bytes)\n", act_size, act_size_bytes);
+    printf("Cost:                         $%.2lf\n", cost);
 
 
     printf("\n");
