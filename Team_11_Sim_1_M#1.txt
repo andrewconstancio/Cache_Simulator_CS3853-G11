@@ -1,0 +1,40 @@
+Cache Simulator CS 3853 Spring 2021 - Group #11
+
+Trace File: Trace1.trc
+
+***** Cache Input Parameters ***** 
+Cache Size:                    512KB
+Block Size:                    16 bytes
+Associativity:                 8 
+Replacement Policy:            Random 
+
+***** Cache Calculated Values *****
+
+Total # Blocks:               32768
+Tag Size:                     16 bits
+Index Size:                   12 bits
+Total # Rows:                 4096
+Overhead Size:                69632 bytes
+Implementation Memory Size:   580.00 KB	(593920 bytes)
+Cost:                         $52.20
+
+0x7c81eb33: 0001
+0x7c81eb34: 0001
+0x7c81eb35: 0003
+0x78158e69: 0001
+0x78158e6a: 0003
+0x1763891: 0001
+0x1763892: 0001
+0x1763893: 0001
+0x1763894: 0001
+0x1763895: 0001
+0x1763896: 0001
+0x1763897: 0001
+0x1763898: 0001
+0x1763899: 0001
+0x176389a: 0001
+0x176389b: 0001
+0x176389c: 0001
+0x176389d: 0001
+0x176389e: 0001
+0x176389f: 0001
