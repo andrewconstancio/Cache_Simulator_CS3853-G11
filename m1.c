@@ -217,12 +217,12 @@ void m1(ParsedArgs *myIns) {
     //IMPLEMATION SIZE
     int overhead_convert = overhead / 1024;
     int act_size = cSize + overhead_convert;
-	int act_size_bytes = act_size * 1024;
+    int act_size_bytes = act_size * 1024;
 
     //COST
     double cost = act_size * 0.09; // 9 cents per KB as per instruction file
 	
-	printf("***** Cache Calculated Values *****\n\n");
+	  printf("***** Cache Calculated Values *****\n\n");
 
     printf("Total # Blocks:               %d\n", block_total);
     printf("Tag Size:                     %d bits\n", tag);

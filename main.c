@@ -3,6 +3,7 @@
 
 #include "ParseInput.h"
 #include "m1.h"
+#include "m2.h"
 
 int main(int argc, char **argv){
 
@@ -20,6 +21,7 @@ int main(int argc, char **argv){
 	m1(myIns);
 	
 	//TODO Cache simulation
+  m2(myIns);
 
 	//free parsed args
 	free(myIns->traceFileName);
