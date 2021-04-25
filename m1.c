@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h> 
+#include <regex.h> 
 
 #include "ParseInput.h"
 #include "ParseHex.h"
@@ -114,6 +115,11 @@ void m1(ParsedArgs *myIns) {
     int missCount;
     int hitCount;
     int readCount;
+    
+    // start used for CPI
+    int cycleTotal = 0;
+    int instructionCount = 0;
+    // end used for CPI
 
     for(i = 0; i < rows; i++) {
         for(j = 0; j < asso; j++) {
@@ -134,7 +140,7 @@ void m1(ParsedArgs *myIns) {
         int addressArr[3];
         int cnt;
         
-        //fine addresses in file
+        //find addresses in file
         if(line_count == 1) {
             sscanf(line, "%s %s %x", reg, size, &address);
             real_size[0] = size[1];
@@ -155,6 +161,7 @@ void m1(ParsedArgs *myIns) {
                 HexToBin(str, binaryNum);
                 strcpy(a[1], binaryNum);
                 addressArr[1] = address_two;
+                instructionCount += 1; // USED FOR CPI
             } else {
                 strcpy(a[1], "");
                 addressArr[1] = -1;
@@ -210,12 +217,14 @@ void m1(ParsedArgs *myIns) {
                     if(newCache[iIndex][i].valid == 0) {
                         newCache[iIndex][i].valid = 1;
                         newCache[iIndex][i].tag = tagValue;
+                        cycleTotal += (4*ceil(bSize/4)); // used for CPI
                         missCount += 1;
                         break;
                     } else if(newCache[iIndex][i].valid == 1) {
-                        // if(strcmp(newCache[iIndex][i].tag, tagValue) == 0) {
-                        //     hitCount += 1 
-                        // }
+                        if(strcmp(newCache[iIndex][i].tag, tagValue) == 0) {
+                          hitCount += 1; 
+                          cycleTotal += 1; // used for CPI
+                        }
                     } else {
                         // random replacement
                         int num = (rand() % (asso - 0 + 1)) + 0;
@@ -264,7 +273,7 @@ void m1(ParsedArgs *myIns) {
     
     double hitRate = (double) (cacheHits / totalCacheAccesses) * 100; // done
     double missRate = (double) (cacheMisses / totalCacheAccesses) * 100; // done
-    double cpi = 0;
+    double cpi = (double) (cycleTotal / instructionCount); // done
     double unusedCacheSpaceKB = (double) ( (block_total-compulsoryMisses) * (bSize+overhead) ) / 1024; // done
     double totalCacheSpaceKB = (double) act_size; // done
     double cacheSpacePercentUsage = (unusedCacheSpaceKB / totalCacheSpaceKB) * 100; // done
