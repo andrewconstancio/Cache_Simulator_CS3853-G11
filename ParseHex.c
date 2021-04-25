@@ -5,6 +5,9 @@
 
 #include "ParseHex.h"
 
+//Struct to hold arguments
+//struct _CacheCol;
+//above moved to header file
 
 void HexToBin(char* hexdec, char *binaryNum) {
 // void HexToBin(char* hexdec, int tag, int index, char* instLength, char type, int asso, int bSize, BinaryValues bin) {

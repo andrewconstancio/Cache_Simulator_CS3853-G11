@@ -10,7 +10,7 @@ int fromBinary(const char *s) {
     return (int) strtol(s, NULL, 2);
  }
 
- signed int binaryToHex(char* value) {
+signed int binaryToHex(char* value) {
     char *a = value;
     int num = 0;
     do {
@@ -23,6 +23,10 @@ int fromBinary(const char *s) {
 }
 
 void m1(ParsedArgs *myIns) {
+
+    // SET VARIABLES BELOW
+    double pricePerKB = 0.09; // 9 cents per KB as per instruction file
+    // END SET VARIABLES
 
     int cSize = myIns->cacheSize;
     int bSize = myIns->blockSize;
@@ -84,12 +88,12 @@ void m1(ParsedArgs *myIns) {
     //IMPLEMATION SIZE
     int overhead_convert = overhead / 1024;
     int act_size = cSize + overhead_convert;
-	int act_size_bytes = act_size * 1024;
+	  int act_size_bytes = act_size * 1024;
 
     //COST
-    double cost = act_size * 0.09; // 9 cents per KB as per instruction file
+    double cost = act_size * pricePerKB;
 	
-	printf("***** Cache Calculated Values *****\n\n");
+  	printf("***** Cache Calculated Values *****\n\n");
 
     printf("Total # Blocks:               %d\n", block_total);
     printf("Tag Size:                     %d bits\n", tag);
@@ -99,6 +103,8 @@ void m1(ParsedArgs *myIns) {
     printf("Implementation Memory Size:   %d.00 KB	(%d bytes)\n", act_size, act_size_bytes);
     printf("Cost:                         $%.2lf\n", cost);
     printf("\n");
+
+    // M2 STARTS HERE ???
 
     int count = 0;
     int line_count = 1;
@@ -241,7 +247,42 @@ void m1(ParsedArgs *myIns) {
     }
 
     printf("MISS: %d\n", missCount);
-
+    
+    // BEGIN MODULE 2 PRINTOUTS
+    
+    // BEGIN CALCULATION "Cache Simulation Results"
+    
+    int totalCacheAccesses = 0;
+    int cacheHits = 0;
+    int cacheMisses = 0;
+    int compulsoryMisses = 0;
+    int conflictMisses = 0;
+    
+    // END CALCULATION "Cache Simulation Results"
+  
+    // BEGIN CALCULATION "CACHE HIT & MISS RATE"
+    
+    double hitRate = (double) (cacheHits / totalCacheAccesses) * 100; // done
+    double missRate = (double) (cacheMisses / totalCacheAccesses) * 100; // done
+    double cpi = 0;
+    double unusedCacheSpaceKB = (double) ( (block_total-compulsoryMisses) * (bSize+overhead) ) / 1024; // done
+    double totalCacheSpaceKB = (double) act_size; // done
+    double cacheSpacePercentUsage = (unusedCacheSpaceKB / totalCacheSpaceKB) * 100; // done
+    double cacheSpaceWasteDollars = unusedCacheSpaceKB * pricePerKB; // done
+    int unusedCacheBlocks = 0;
+    int totalCacheBlocks = block_total; // done
+    
+    printf("***** ***** CACHE HIT & MISS RATE: ***** *****\n\n");
+    
+    printf("Hit Rate:            %.4lf%\n", hitRate);
+    printf("Miss Rate:           %.4lf%\n", missRate);
+    printf("CPI:                 %.2lf Cycles/Instruction\n", cpi);
+    printf("Unused Cache Space:  %.2lf KB / %.2lf KB = %.2lf% Waste: $%.2lf\n", unusedCacheSpaceKB, totalCacheSpaceKB, cacheSpacePercentUsage, cacheSpaceWasteDollars);
+    printf("Unused Cache Blocks: %d / %d\n", unusedCacheBlocks, totalCacheBlocks);
+    
+    // END CALCULATION "CACHE HIT & MISS RATE"
+    
+    // END MODULE 2 PRINTOUTS
 
     fclose(file);
 }

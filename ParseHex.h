@@ -1,12 +1,12 @@
+//header file for ParseHex.c
 
-
-struct CacheCol {
+typedef struct _CacheCol {
     short int valid;
     char* tag;
     char* offset;
     char* colNum;
     struct CacheCol* next;
-} typedef CacheCol;
+} CacheCol;
 
 struct cache {
     short int valid;
